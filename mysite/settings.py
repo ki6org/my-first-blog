@@ -119,7 +119,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    ('bootstrap', 'ki6org.pythonanywhere.com/static/css/'),
+    ('bootstrap', 'blog/static/css/'),
     os.path.join(BASE_DIR, "static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
