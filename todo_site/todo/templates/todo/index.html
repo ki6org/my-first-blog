@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+            background: #fff;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-form {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="container-fluid">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info">
+        <strong>{{ message }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="text-center"><i>TODO LIST</i></h1>
+            <hr />
+            {% for todo in list %}
+            <div class="card">
+                <h3>{{ todo.title }}</h3>
+                <hr />
+                <p><strong>Date:</strong> {{ todo.date }}</p>
+                <p><strong>Details:</strong> {{ todo.details }}</p>
+                <form action="/del/{{ todo.id }}" method="POST">
+                    {% csrf_token %}
+                    <button value="remove" type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-trash"></span> Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="submit-form">
+                <h2 class="text-center">Add New Task</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_title" class="form-label">Title:</label>
+                        {{ forms.title }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_date" class="form-label">Date:</label>
+                        {{ forms.date }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_details" class="form-label">Details:</label>
+                        {{ forms.details }}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -5,7 +5,9 @@ def question_form(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-            form.save()
+            question = form.save(commit=False)
+            question.author = request.user
+            question.published_date = timezone.now()
             return redirect('question_form')
     else:
         form = QuestionForm()
